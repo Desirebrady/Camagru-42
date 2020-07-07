@@ -23,7 +23,7 @@ if (isset($_POST['signup-btn'])) {
         $error .= '<p class="text-danger">Passwords dont Match </p>';
     }
     $commentl = strlen($_POST['password']);
-    if ($commentl < 8){
+    if ($commentl < 8) {
         $error .= '<p class="text-danger">Password should contain more than 8 characters</p>';
     }
     $username = $_POST['username'];
@@ -38,7 +38,7 @@ if (isset($_POST['signup-btn'])) {
         $error .= '<p class="text-danger">Email exist</p>';;
     }
 
-    if($error == '') {
+    if ($error == '') {
         $query = "INSERT INTO users SET username=?, email=?, token=?, password=?";
         $stmt = $conn->prepare($query);
         $stmt->bind_param('ssss', $username, $email, $token, $password);
@@ -49,7 +49,7 @@ if (isset($_POST['signup-btn'])) {
             $stmt->close();
 
             // TO DO: send verification email to user
-           sendVerificationEmail($email, $token);
+            sendVerificationEmail($email, $token);
 
             $_SESSION['id'] = $user_id;
             $_SESSION['username'] = $username;
@@ -57,16 +57,16 @@ if (isset($_POST['signup-btn'])) {
             $_SESSION['verified'] = false;
             $_SESSION['message'] = 'You are logged in!';
             $_SESSION['type'] = 'alert-success';
-            header('location: ../index.php');
+            header('location: ../controllers/gallery.php');
         } else {
             $_SESSION['error_msg'] = "Database error: Could not register user";
         }
     }
     $data = array(
         'error'  => $error
-       );
-       
-       echo json_encode($data);
+    );
+
+    echo json_encode($data);
 }
 
 // LOGIN
@@ -96,7 +96,7 @@ if (isset($_POST['login-btn'])) {
                 $_SESSION['verified'] = $user['verified'];
                 $_SESSION['message'] = 'You are logged in!';
                 $_SESSION['type'] = 'alert-success';
-                header('location: ../index.php');
+                header('location: ../controllers/gallery.php');
                 exit(0);
             } else { // if password does not match
                 $errors['login_fail'] = "Wrong username / password";
@@ -106,5 +106,4 @@ if (isset($_POST['login-btn'])) {
             $_SESSION['type'] = "alert-danger";
         }
     }
-    
 }

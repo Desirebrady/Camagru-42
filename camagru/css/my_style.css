@@ -215,9 +215,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .feed-image {
-  img {
-    max-width: 100%;
-  }
+ 
 }
 .index{
   position: absolute
