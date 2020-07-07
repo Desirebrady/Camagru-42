@@ -5,4 +5,4 @@ This is a Instagram like dublicate for personal use only. View, comment and like
 I used MySql for database, Bootstrap for css
 ![Screenshot](index.png)
 
-![Screenshot](comment.png)
+![Screenshot](comments.png)
