@@ -11,20 +11,19 @@ $conn = new mysqli('localhost', 'root', '', 'camagru');
 // SIGN UP USER
 if (isset($_POST['signup-btn'])) {
     if (empty($_POST['username'])) {
-        $error .= '<p class="text-danger">Username is required</p>';
+        array_push($errors, "Username is required");
     }
     if (empty($_POST['email'])) {
-        $error .= '<p class="text-danger">Email is required</p>';
+        array_push($errors, "Email is required");
     }
     if (empty($_POST['password'])) {
-        $error .= '<p class="text-danger">Password is required</p>';
+        array_push($errors, "Password is required");
     }
     if (isset($_POST['password']) && $_POST['password'] !== $_POST['passwordConf']) {
-        $error .= '<p class="text-danger">Passwords dont Match </p>';
+        array_push($errors, "Passwords dont Match ");
     }
-    $commentl = strlen($_POST['password']);
-    if ($commentl < 8) {
-        $error .= '<p class="text-danger">Password should contain more than 8 characters</p>';
+    if (strlen($_POST['password']) < 8) {
+        array_push($errors, "Password should contain more than 8 characters");
     }
     $username = $_POST['username'];
     $email = $_POST['email'];
@@ -35,7 +34,7 @@ if (isset($_POST['signup-btn'])) {
     $sql = "SELECT * FROM users WHERE email='$email' LIMIT 1";
     $result = mysqli_query($conn, $sql);
     if (mysqli_num_rows($result) > 0) {
-        $error .= '<p class="text-danger">Email exist</p>';;
+        array_push($errors, "Email already exist");
     }
 
     if ($error == '') {
@@ -59,14 +58,9 @@ if (isset($_POST['signup-btn'])) {
             $_SESSION['type'] = 'alert-success';
             header('location: ../controllers/gallery.php');
         } else {
-            $_SESSION['error_msg'] = "Database error: Could not register user";
+            array_push($errors, "Database error: Could not register user");
         }
     }
-    $data = array(
-        'error'  => $error
-    );
-
-    echo json_encode($data);
 }
 
 // LOGIN
@@ -78,8 +72,8 @@ if (isset($_POST['login-btn'])) {
         $errors['password'] = 'Password required';
     }
 
-    echo $username = $_POST['username'];
-    echo $password = $_POST['password'];
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 
     if (count($errors) === 0) {
         $query = "SELECT * FROM users WHERE username=? OR email=? LIMIT 1";
@@ -89,18 +83,22 @@ if (isset($_POST['login-btn'])) {
         if ($stmt->execute()) {
             $result = $stmt->get_result();
             $user = $result->fetch_assoc();
-            if (password_verify($password, $user['password'])) { // if password matches
-                $stmt->close();
-                $_SESSION['id'] = $user['id'];
-                $_SESSION['username'] = $user['username'];
-                $_SESSION['email'] = $user['email'];
-                $_SESSION['verified'] = $user['verified'];
-                $_SESSION['message'] = 'You are logged in!';
-                $_SESSION['type'] = 'alert-success';
-                header('location: ../controllers/gallery.php');
-                exit(0);
-            } else { // if password does not match
-                $errors['login_fail'] = "Wrong username / password";
+            if ($user != null) {
+                if (password_verify($password, $user['password'])) { // if password matches
+                    $stmt->close();
+                    $_SESSION['id'] = $user['id'];
+                    $_SESSION['username'] = $user['username'];
+                    $_SESSION['email'] = $user['email'];
+                    $_SESSION['verified'] = $user['verified'];
+                    $_SESSION['message'] = 'You are logged in!';
+                    $_SESSION['type'] = 'alert-success';
+                    header('location: ../controllers/gallery.php');
+                    exit(0);
+                } else { // if password does not match
+                    $errors['login_fail'] = "Incorrect password";
+                }
+            } else {
+                $errors['message'] = "Wrong username / password ";
             }
         } else {
             $_SESSION['message'] = "Database error. Login failed!";

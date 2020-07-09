@@ -18,7 +18,11 @@ include        '../controllers/authController.php';
 </head>
 
 <body>
-
+    <?php if (count($errors) != 0) { ?>
+        <div class="alert alert-danger" role="alert">
+            <?php include('../controllers/messages.php'); ?>
+        </div>
+    <?php } ?>
     <div class="content-w3ls" style="margin-top: 10%;">
         <div class="content-bottom">
             <h2 style="color: white">Sign In</h2>
