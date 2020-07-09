@@ -30,8 +30,6 @@ $images = mysqli_fetch_all($results, MYSQLI_ASSOC);
 <head>
 	<title>Edit Profile</title>
 	<link rel="stylesheet" type="text/css" href="../css/my_style.css">
-	<link rel="stylesheet" type="text/css" href="../css/Edit.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
 	<style>
 		.grid {
@@ -50,7 +48,33 @@ $images = mysqli_fetch_all($results, MYSQLI_ASSOC);
 </head>
 
 <body>
-	<?php include_once '../header.php'; ?>
+	<header id="header">
+		<div id="logo" class="pull-left">
+			<h1><a href="#intro" class="scrollto">Camagru</a></h1>
+		</div>
+		<nav id="nav-menu-container">
+			<ul class="nav-menu" style="color: #14FFFF; font-size: large">
+				<?php if (!empty($_SESSION['username'])) : ?>
+					<?php echo $_SESSION['username']; ?>
+				<?php else : ?>
+					Welcome Guest
+				<?php endif ?>
+				<?php if (!$_SESSION['verified']) : ?>
+					<li><a href="../index.php">Home</a></li>
+					<li><a href="../admin/login.php?logout='0'">Logout</a></li>
+				<?php else : ?>
+					<li class="menu-active"><a href="gallery.php">Back</a></li>
+					<li class="menu-has-children"><a href="#">Action</a>
+						<ul style="margin-top: 0;">
+							<?php if (!empty($_SESSION['username'])) : ?>
+								<li><a href="../admin/login.php?logout='0'" style="color: white">Bye</a></li>
+							<?php endif; ?>
+						</ul>
+					</li>
+				<?php endif ?>
+			</ul>
+		</nav>
+	</header>
 	<div class="container-fluid">
 		<div style="margin-top: 10%; margin-left: 10%">
 			<h1> Your images</h1>
