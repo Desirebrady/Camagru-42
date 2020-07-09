@@ -19,7 +19,7 @@ if (isset($_POST['signup-btn'])) {
     if (empty($_POST['password'])) {
         array_push($errors, "Password is required");
     }
-    if (isset($_POST['password']) && $_POST['password'] !== $_POST['passwordConf']) {
+    if ($_POST['password'] !== $_POST['passwordConf']) {
         array_push($errors, "Passwords dont Match ");
     }
     if (strlen($_POST['password']) < 8) {
@@ -37,7 +37,7 @@ if (isset($_POST['signup-btn'])) {
         array_push($errors, "Email already exist");
     }
 
-    if ($error == '') {
+    if (count($errors) == 0) {
         $query = "INSERT INTO users SET username=?, email=?, token=?, password=?";
         $stmt = $conn->prepare($query);
         $stmt->bind_param('ssss', $username, $email, $token, $password);
@@ -54,8 +54,6 @@ if (isset($_POST['signup-btn'])) {
             $_SESSION['username'] = $username;
             $_SESSION['email'] = $email;
             $_SESSION['verified'] = false;
-            $_SESSION['message'] = 'You are logged in!';
-            $_SESSION['type'] = 'alert-success';
             header('location: ../controllers/gallery.php');
         } else {
             array_push($errors, "Database error: Could not register user");
@@ -90,8 +88,6 @@ if (isset($_POST['login-btn'])) {
                     $_SESSION['username'] = $user['username'];
                     $_SESSION['email'] = $user['email'];
                     $_SESSION['verified'] = $user['verified'];
-                    $_SESSION['message'] = 'You are logged in!';
-                    $_SESSION['type'] = 'alert-success';
                     header('location: ../controllers/gallery.php');
                     exit(0);
                 } else { // if password does not match

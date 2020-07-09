@@ -19,7 +19,7 @@
 				<?php include('../controllers/messages.php'); ?>
 				<div class="form-group">
 					<label>Your email address</label>
-					<input type="email" name="email">
+					<input style="color: black;" type="email" name="email">
 				</div>
 				<div class="form-group">
 					<button type="submit" name="reset-password" class="btn btn-success" style="background-color: #03A9F4; border-color: #03A9F4;">Submit</button>

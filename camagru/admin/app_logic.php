@@ -1,8 +1,10 @@
-<?php 
+<?php
+require_once '../controllers/sendEmails.php';
 $auth = 0;
 session_start();
 $errors = [];
 $user_id = "";
+
 $db = mysqli_connect('localhost', 'root', '', 'camagru');
 
 
@@ -18,7 +20,7 @@ if (isset($_POST['reset-password'])) {
 
   if (empty($email)) {
     array_push($errors, "Your email is required");
-  }else if(mysqli_num_rows($results) <= 0) {
+  } else if (mysqli_num_rows($results) <= 0) {
     array_push($errors, "Sorry, no user exists on our system with that email");
   }
   // generate a unique random token of length 100
@@ -29,18 +31,7 @@ if (isset($_POST['reset-password'])) {
     $sql = "INSERT INTO password_reset(email, token) VALUES ('$email', '$token')";
     $results = mysqli_query($db, $sql);
 
-    
-    $to = $email;
-    $body = '
-        Thank you for signing up on our site. Please click on the link below to verify your account:.
-      "http://127.0.0.1:8080/camagru/admin/new_password.php?token=' . $token . '"';
-    $headers = "From: info@camagru.com";
-    // Send the message
-    if (mail($to,"Reset your Password",$body,$headers)) {
-        echo "Message Sent";
-    } else {
-        echo "Message Error";
-    }
+    sendResetMail($email, $token);
     header('location: ../controllers/pending.php?email=' . $email);
   }
 }
@@ -64,9 +55,8 @@ if (isset($_POST['new_password'])) {
       $new_pass = md5($new_pass);
       $sql = "UPDATE users SET password='$new_pass' WHERE email='$email'";
       $results = mysqli_query($db, $sql);
+      $_SESSION['message'] = "Your password has been changed";
       header('location: ../index.php');
     }
   }
-  echo "fuck";
 }
-?>

@@ -1,5 +1,6 @@
 <?php
-session_start()
+session_start();
+require_once('../camagru/config/setup.php');
 ?>
 
 <!DOCTYPE html>
@@ -17,13 +18,18 @@ session_start()
 </head>
 
 <body>
+	<?php if (!empty($_SESSION['message'])) { ?>
+		<div class="alert alert-success" role="alert" style="text-align: center;">
+			<?php echo $_SESSION['message'];  ?>
+		</div>
+	<?php } ?>
 	<div class="content-w3ls" style="font-size: 20px; margin-top: 10%	">
 		<div class="content-bottom">
 			<h2 style="color: white">Welcome!</h2>
 			<br>
 			<p style="color: white">Already a member? <a style="text-decoration: none;margin-left: 40px;" href="admin/Login.php">Sign in</a></p>
 			<p style="color: white">New member? <a style="text-decoration: none; margin-left: 84px;" href="admin/signup.php">Sign up</a></p>
-			<p style="text-align: center;"><a style="text-decoration: none;" href="controllers/gallery.php">View Gallery</a></p>
+			<!-- <p style="text-align: center;"><a style="text-decoration: none;" href="controllers/gallery.php">View Gallery</a></p> -->
 		</div>
 	</div>
 </body>

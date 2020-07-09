@@ -1,5 +1,6 @@
 <?php
 require 'db.php';
+require_once 'sendEmails.php';
 //add_comment.php
 $conn = mysqli_connect("localhost", "root", "", "camagru");
 $connect = new PDO('mysql:host=localhost;dbname=camagru', 'root', '');
@@ -20,10 +21,13 @@ if (isset($_GET['imageid']) && $_GET['imageid'] !== '') {
     $sql = "SELECT email FROM users WHERE username ='$username' LIMIT 1";
     $results = mysqli_query($conn, $sql);
 
-    while ($row = mysqli_fetch_array($results))
+    while ($row = mysqli_fetch_array($results)) {
         $email = trim($row['email']);
+        // if ($row['recieveCommEmail'] == 1) {
+        //     sendMail($email);
+        // }
+    }
 
-    // sendmail($email);
     $comment_id = $_POST["comment_id"];
     if (empty($_POST["comment_name"]))
         $error .= '<p class="text-danger">Name is required</p>';
@@ -41,7 +45,7 @@ if (isset($_GET['imageid']) && $_GET['imageid'] !== '') {
     if ($error == '') {
         $query = "INSERT INTO tbl_comment (parent_comment_id, comment, comment_sender_name, image_id) 
         VALUES ('$comment_id', '$comment_content', '$comment_name', '$image_id')";
-      
+
         $result = mysqli_query($conn, $query);
 
         if (!$result) {
@@ -53,12 +57,3 @@ if (isset($_GET['imageid']) && $_GET['imageid'] !== '') {
 }
 
 echo $result;
-
-// function sendmail($email)
-// {
-//     $headers = "From: info@camagru.com";
-//     if (mail($email, "Comment recieved", "fuck you", $headers))
-//         echo "Message Sent";
-//     else
-//         echo "Message Error";
-// }

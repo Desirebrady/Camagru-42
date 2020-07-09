@@ -8,9 +8,9 @@ if (isset($_POST['save'])) {
 
     $rename = $_POST['username'];
     $email = $_POST['email'];
-    $rcom = $_POST['rcom'];
+    $recieveCommEmail = $_POST['recieveCommEmail'];
 
-    $query1 = "UPDATE users set username='$rename', email='$email', rcom='$rcom' WHERE username='$user'";
+    $query1 = "UPDATE users set username='$rename', email='$email', recieveCommEmail='$recieveCommEmail' WHERE username='$user'";
     $results1 = mysqli_query($db, $query1);
     $query2 = "UPDATE images set username='$rename' WHERE username='$user'";
     $results2 = mysqli_query($db, $query2);
@@ -23,7 +23,7 @@ $myinfo = mysqli_query($db, "SELECT * FROM users where username='$user'");
 while ($row = mysqli_fetch_array($myinfo)) {
     $gusername = $row['username'];
     $gemail = $row['email'];
-    $grcom = $row['rcom'];
+    $recieveCommEmail = $row['recieveCommEmail'];
 }
 ?>
 <!DOCTYPE html>
@@ -83,14 +83,14 @@ while ($row = mysqli_fetch_array($myinfo)) {
                         </label>
 
                         <label> <span>Recieve comment notifications? </span>
-                            <?php if ($grcom == 0) { ?>
+                            <?php if ($recieveCommEmail == 0) { ?>
 
-                                <select name="rcom" class="btn btn-success" style="margin-left: 50px; background-color: #03A9F4; border-color: #03A9F4">
+                                <select name="recieveCommEmail" class="btn btn-success" style="margin-left: 50px; background-color: #03A9F4; border-color: #03A9F4">
                                     <option value="0">False</option>
                                     <option value="1">True</option>
                                 </select>
                             <?php } else { ?>
-                                <select name="rcom" style="margin-left: 57px;" class="btn btn-success" style="margin-left: 50px; background-color: #03A9F4; border-color: #03A9F4">
+                                <select name="recieveCommEmail" style="margin-left: 57px;" class="btn btn-success" style="margin-left: 50px; background-color: #03A9F4; border-color: #03A9F4">
                                     <option value="1">True</option>
                                     <option value="0">False</option>
                                 </select>

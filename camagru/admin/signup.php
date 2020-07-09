@@ -16,7 +16,11 @@ include        '../controllers/authController.php';
 </head>
 
 <body>
-
+    <?php if (count($errors) != 0) { ?>
+        <div class="alert alert-danger" role="alert" style="text-align: center;">
+            <?php include('../controllers/messages.php'); ?>
+        </div>
+    <?php } ?>
     <div class="content-w3ls" style="margin-top:5%;">
         <div class="content-bottom">
             <h2 style="color: white;">Register In Here</h2>

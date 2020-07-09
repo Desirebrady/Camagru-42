@@ -1,5 +1,6 @@
 <?php
 session_start();
+$errors = [];
 
 $conn = new mysqli('localhost', 'root', '', 'camagru');
 
@@ -18,7 +19,6 @@ if (isset($_GET['token'])) {
             $_SESSION['email'] = $user['email'];
             $_SESSION['verified'] = true;
             $_SESSION['message'] = "Your email address has been verified successfully";
-            $_SESSION['type'] = 'alert-success';
             header('location: ../index.php');
             exit(0);
         }

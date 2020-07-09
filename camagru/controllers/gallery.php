@@ -10,6 +10,7 @@ $images_per_page = 5;
 $sql = "SELECT * FROM images";
 $result = mysqli_query($db, $sql);
 $number_of_images = mysqli_num_rows($result);
+$page = 1;
 
 $number_of_pages = ceil($number_of_images / $images_per_page);
 
@@ -92,7 +93,7 @@ $images = mysqli_fetch_all($results, MYSQLI_ASSOC);
 <body>
 
 	<div class="container-fluid">
-		<div class="row">
+		<div class="">
 			<header id="header">
 				<div id="logo" class="pull-left">
 					<h1><a href="#intro" class="scrollto">Camagru</a></h1>
@@ -158,31 +159,32 @@ $images = mysqli_fetch_all($results, MYSQLI_ASSOC);
 					<?php endforeach; ?>
 
 				</div>
+				<div class="row">
+					<div class="column" style="margin-left: 45%;">
+						<?php
+						if ($page < $number_of_pages && $page > 1) {
+							echo	'<div class="pagination">
+								<a style="color: #14FFFF;" href="gallery.php?page=' . $prev . '">' .  '❮' . '</a>';
+							echo		'<a style="color: #14FFFF;" href="gallery.php?page=' . $next . '">' .  '❯' . '</a>
+							</div>  ';
+						} elseif ($page == $number_of_pages && $page > 1) {
+							echo	'<div class="pagination">
+								<a style="color: #14FFFF;" href="gallery.php?page=' . $prev . '">' .  '❮' . '</a>';
+						}
+						if ($page == 1 && $number_of_pages != 1) {
+							$next = $page + 1;
+							echo	'<div class="pagination">
+								<a style="color: #14FFFF;" href="gallery.php?page=' . $next . '">' .  '❯' . '</a> 
+							</div>';
+						}
+						?>
+					</div>
+				</div>
 			<?php endif ?>
 
 
 		</div>
-		<div class="row">
-			<div class="column" style="margin-left: 45%;">
-				<?php
-				if ($page < $number_of_pages && $page > 1) {
-					echo	'<div class="pagination">
-								<a style="color: #14FFFF;" href="gallery.php?page=' . $prev . '">' .  '❮' . '</a>';
-					echo		'<a style="color: #14FFFF;" href="gallery.php?page=' . $next . '">' .  '❯' . '</a>
-							</div>  ';
-				} elseif ($page == $number_of_pages && $page > 1) {
-					echo	'<div class="pagination">
-								<a style="color: #14FFFF;" href="gallery.php?page=' . $prev . '">' .  '❮' . '</a>';
-				}
-				if ($page == 1 && $number_of_pages != 1) {
-					$next = $page + 1;
-					echo	'<div class="pagination">
-								<a style="color: #14FFFF;" href="gallery.php?page=' . $next . '">' .  '❯' . '</a> 
-							</div>';
-				}
-				?>
-			</div>
-		</div>
+
 		<?php include_once '../footer.php'; ?>
 	</div>
 </body>
