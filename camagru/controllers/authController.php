@@ -77,8 +77,9 @@ if (isset($_POST['login-btn'])) {
     if (empty($_POST['password'])) {
         $errors['password'] = 'Password required';
     }
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+
+    echo $username = $_POST['username'];
+    echo $password = $_POST['password'];
 
     if (count($errors) === 0) {
         $query = "SELECT * FROM users WHERE username=? OR email=? LIMIT 1";

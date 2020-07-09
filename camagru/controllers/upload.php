@@ -1,7 +1,7 @@
 <?php
 session_start();
 include     'connect.php';
-include 		'get_uploads.php';
+include 	'get_uploads.php';
 
 if (isset($_GET['delete'])) {
 

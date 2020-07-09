@@ -28,7 +28,33 @@ if (isset($_GET['imageid']) && $_GET['imageid'] !== '') {
 </head>
 
 <body>
-    <?php include_once '../header.php'; ?>
+    <header id="header">
+        <div id="logo" class="pull-left">
+            <h1><a href="#intro" class="scrollto">Camagru</a></h1>
+        </div>
+        <nav id="nav-menu-container">
+            <ul class="nav-menu" style="color: #14FFFF; font-size: large">
+                <?php if (!empty($_SESSION['username'])) : ?>
+                    <?php echo $_SESSION['username']; ?>
+                <?php else : ?>
+                    Welcome Guest
+                <?php endif ?>
+                <?php if (!$_SESSION['verified']) : ?>
+                    <li><a href="../index.php">Home</a></li>
+                    <li><a href="../admin/login.php?logout='0'">Logout</a></li>
+                <?php else : ?>
+                    <li class="menu-active"><a href="gallery.php">Back</a></li>
+                    <li class="menu-has-children"><a href="#">Action</a>
+                        <ul style="margin-top: 0;">
+                            <?php if (!empty($_SESSION['username'])) : ?>
+                                <li><a href="../admin/login.php?logout='0'" style="color: white">Bye</a></li>
+                            <?php endif; ?>
+                        </ul>
+                    </li>
+                <?php endif ?>
+            </ul>
+        </nav>
+    </header>
     <script>
         $(document).ready(function() {
             load_comment();
@@ -97,7 +123,7 @@ if (isset($_GET['imageid']) && $_GET['imageid'] !== '') {
                 </div>
             </div>
             <div class="col-6">
-                <div class="container">
+                <div class="container" style="width: 50%;">
                     <span id="comment_message"></span>
                     <br />
                     <div id="display_comment"></div>
