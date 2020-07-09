@@ -1,6 +1,6 @@
 # camagru
 
-This is a Instagram like dublicate for personal use only. View, comment and like posted pictures
+This is a Instagram like dublicate for personal use only. View, comment and like posted pictures done in php
 
 Login
 ![Screenshot](login.png)
