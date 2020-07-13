@@ -11,7 +11,7 @@ XAMPP is a completely free, easy to install Apache distribution containing Maria
 https://www.apachefriends.org/index.html
 
 Start the apache and mysql servers 
-clone the web application into the xampp htdocs folder and put the url http://localhost/camagru/ into your browser and you good to GO!
+clone the web application into the xampp htdocs folder and put the url http://localhost/matcha/ into your browser and you good to GO!
 
 Login
 ![Screenshot](login.png)
